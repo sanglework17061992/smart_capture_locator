@@ -25,7 +25,7 @@ export class SLIEventHandlers {
         }, true);
     }
 
-    // Handle mouse movement
+    // Handle mouse movement with improved highlighting
     static handleMouseMove(event) {
         const state = SLIConfig.getState();
         
@@ -33,22 +33,43 @@ export class SLIEventHandlers {
         
         const element = event.target;
         
-        // Skip our own elements
+        // Skip our own elements and invalid elements
         if (SLIUtils.isExcludedElement(element)) return;
         
-        // Skip certain elements
+        // Skip if same element or invalid elements
         if (state.lastHoveredElement === element) return;
+        
+        // Skip text nodes and comments
+        if (element.nodeType !== Node.ELEMENT_NODE) return;
+        
+        // Skip script, style, head elements
+        const skipTags = ['SCRIPT', 'STYLE', 'HEAD', 'META', 'LINK', 'TITLE'];
+        if (skipTags.includes(element.tagName)) return;
+        
+        // Skip elements that are not visible
+        const rect = element.getBoundingClientRect();
+        if (rect.width === 0 || rect.height === 0) return;
+        
+        console.log('[SLI] Hovering over:', element.tagName, element.className, element.id);
         
         SLIConfig.setState({ 
             lastHoveredElement: element,
             currentElement: element 
         });
         
-        // Highlight element
+        // Highlight element with improved visual feedback
         SLIUIComponents.highlightElement(element);
         
-        // Update modal with element information
-        this.updateModalWithElement(element);
+        // Update modal with element information (debounced)
+        this.debouncedUpdateModal(element);
+    }
+
+    // Debounced modal update to prevent excessive updates
+    static debouncedUpdateModal(element) {
+        clearTimeout(this._updateTimeout);
+        this._updateTimeout = setTimeout(() => {
+            this.updateModalWithElement(element);
+        }, 50);
     }
 
     // Handle keyboard shortcuts
