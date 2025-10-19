@@ -39,12 +39,12 @@ async function testSetup() {
         return;
     }
 
-    // Test 4: Check injector script
-    const injectorPath = './injector.js';
+    // Test 4: Check modular injector script
+    const injectorPath = './injector-modular.js';
     if (fs.existsSync(injectorPath)) {
-        console.log('✅ Injector script found');
+        console.log('✅ Modular injector script found');
     } else {
-        console.log('❌ Injector script missing');
+        console.log('❌ Modular injector script missing');
         return;
     }
 

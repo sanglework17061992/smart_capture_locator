@@ -12,13 +12,10 @@ class SmartLocatorInspector {
     }
 
     async loadInjectorScript() {
-        // Check if we should use the modular version
-        const useModular = process.env.SLI_MODULAR === 'true' || process.argv.includes('--modular');
-        const injectorPath = useModular 
-            ? path.join(__dirname, 'injector-modular.js')
-            : path.join(__dirname, 'injector.js');
+        // Always use the modular version (enhanced with all improvements)
+        const injectorPath = path.join(__dirname, 'injector-modular.js');
         
-        console.log(`📄 Loading injector: ${path.basename(injectorPath)}`);
+        console.log(`📄 Loading enhanced modular injector: ${path.basename(injectorPath)}`);
         this.injectorScript = fs.readFileSync(injectorPath, 'utf8');
     }
 
