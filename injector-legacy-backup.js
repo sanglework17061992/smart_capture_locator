@@ -1,4 +1,8 @@
-// Smart Locator Inspector - Injected Browser Script
+// Smart Locator Inspector - LEGACY BACKUP VERSION (DEPRECATED)
+// ================================================================
+// ⚠️  WARNING: This file is DEPRECATED and kept only for reference.
+// ⚠️  Use injector-modular.js instead - it contains all latest improvements.
+// ================================================================
 // This script runs in the browser context to provide real-time element inspection
 
 (function() {

@@ -69,10 +69,10 @@ fs.writeFileSync(outputFile, finalContent);
 console.log('✅ Successfully built:', outputFile);
 console.log('📏 Total size:', Math.round(fs.statSync(outputFile).size / 1024), 'KB');
 
-// Compare with original if it exists
-const originalPath = path.join(srcDir, '../injector.js');
-if (fs.existsSync(originalPath)) {
-    console.log('🔧 Original injector.js size:', Math.round(fs.statSync(originalPath).size / 1024), 'KB');
+// Compare with legacy backup if it exists
+const legacyPath = path.join(srcDir, '../injector-legacy-backup.js');
+if (fs.existsSync(legacyPath)) {
+    console.log('🔧 Legacy injector size:', Math.round(fs.statSync(legacyPath).size / 1024), 'KB');
 }
 
 // Verify the file can be parsed

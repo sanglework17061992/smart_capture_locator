@@ -18,7 +18,7 @@ export class SLIStyles {
                 font-size: 13px !important; 
                 z-index: 2147483647 !important; 
                 box-shadow: 0 16px 48px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.1) !important; 
-                backdrop-filter: blur(20px) !important; 
+                backdrop-filter: blur(5px) !important; 
                 overflow: hidden !important; 
                 pointer-events: auto !important; 
                 user-select: none !important; 
@@ -265,18 +265,64 @@ export class SLIStyles {
                 height: 0 !important; 
                 pointer-events: none !important; 
                 z-index: 999999999 !important; 
-                border: 4px solid #FF0000 !important; 
-                background: rgba(255, 0, 0, 0.2) !important; 
-                box-shadow: 0 0 20px rgba(255, 0, 0, 0.8) !important; 
+                border: 2px solid #007acc !important; 
+                background: rgba(0, 122, 204, 0.15) !important; 
+                box-shadow: 0 0 0 1px rgba(0, 122, 204, 0.3), inset 0 0 0 1px rgba(0, 122, 204, 0.3) !important; 
                 display: none !important; 
-                opacity: 0.8 !important; 
-                border-radius: 0 !important; 
+                opacity: 1 !important; 
+                border-radius: 2px !important; 
+                transition: all 0.1s ease !important;
             }
             
             .sli-highlight.frozen { 
-                border-color: #00FF00 !important; 
-                background: rgba(0, 255, 0, 0.2) !important; 
-                box-shadow: 0 0 20px rgba(0, 255, 0, 0.8) !important; 
+                border: 2px solid #00FF00 !important; 
+                background: rgba(0, 255, 0, 0.15) !important; 
+                box-shadow: 0 0 0 1px rgba(0, 255, 0, 0.3), inset 0 0 0 1px rgba(0, 255, 0, 0.3) !important; 
+                animation: sli-pulse 1.5s infinite !important;
+            }
+            
+            @keyframes sli-pulse {
+                0%, 100% { opacity: 1; }
+                50% { opacity: 0.7; }
+            }
+            
+            .sli-element-info {
+                position: fixed !important;
+                background: rgba(0, 0, 0, 0.85) !important;
+                color: white !important;
+                padding: 6px 10px !important;
+                border-radius: 4px !important;
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', monospace !important;
+                font-size: 11px !important;
+                font-weight: normal !important;
+                line-height: 1.4 !important;
+                z-index: 1000000000 !important;
+                pointer-events: none !important;
+                white-space: nowrap !important;
+                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3) !important;
+                border: 1px solid rgba(255, 255, 255, 0.2) !important;
+                max-width: 300px !important;
+                word-break: break-all !important;
+                opacity: 1 !important;
+                display: none !important;
+            }
+            
+            .sli-element-info .tag {
+                color: #569cd6 !important;
+                font-weight: bold !important;
+            }
+            
+            .sli-element-info .attr {
+                color: #9cdcfe !important;
+            }
+            
+            .sli-element-info .value {
+                color: #ce9178 !important;
+            }
+            
+            .sli-element-info .size {
+                color: #d4d4d4 !important;
+                margin-left: 8px !important;
             }
             
             .sli-hierarchy-container { 

@@ -4,11 +4,10 @@
   "description": "Real-time DOM element inspector with automation-friendly locators using Chrome DevTools Protocol",
   "main": "smart-locator.js",
   "scripts": {
-    "start": "node smart-locator.js",
-    "start:modular": "node smart-locator.js --modular",
+    "start": "node smart-locator.js --modular",
     "build": "cd src && node build.js",
     "build:watch": "cd src && node build.js && echo 'Watching for changes...' && chokidar \"modules/**/*.js\" \"main.js\" -c \"node build.js\"",
-    "dev": "npm run build && npm run start:modular",
+    "dev": "npm run build && npm run start",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [

@@ -196,25 +196,78 @@ export class SLIUtils {
 
     // Copy text to clipboard
     static async copyToClipboard(text) {
+        if (!text) {
+            console.error('[SLI] Cannot copy empty text');
+            return false;
+        }
+
+        console.log('[SLI] Attempting to copy:', text);
+
         try {
+            // Method 1: Modern Clipboard API (preferred)
             if (navigator.clipboard && window.isSecureContext) {
+                console.log('[SLI] Using modern clipboard API');
                 await navigator.clipboard.writeText(text);
-            } else {
-                // Fallback for older browsers
-                const textArea = document.createElement('textarea');
-                textArea.value = text;
-                textArea.style.position = 'fixed';
-                textArea.style.left = '-999999px';
-                textArea.style.top = '-999999px';
-                document.body.appendChild(textArea);
-                textArea.focus();
-                textArea.select();
-                document.execCommand('copy');
-                textArea.remove();
+                console.log('[SLI] ✅ Successfully copied using clipboard API');
+                return true;
             }
-            return true;
+            
+            // Method 2: Fallback using execCommand
+            console.log('[SLI] Using fallback execCommand method');
+            const textArea = document.createElement('textarea');
+            textArea.value = text;
+            textArea.style.position = 'fixed';
+            textArea.style.left = '-999999px';
+            textArea.style.top = '-999999px';
+            textArea.style.opacity = '0';
+            textArea.setAttribute('readonly', '');
+            
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+            textArea.setSelectionRange(0, text.length);
+            
+            const successful = document.execCommand('copy');
+            textArea.remove();
+            
+            if (successful) {
+                console.log('[SLI] ✅ Successfully copied using execCommand');
+                return true;
+            } else {
+                console.error('[SLI] ❌ execCommand copy failed');
+                return false;
+            }
+            
         } catch (error) {
-            console.error('[SLI] Failed to copy to clipboard:', error);
+            console.error('[SLI] ❌ Failed to copy to clipboard:', error);
+            
+            // Method 3: Manual selection fallback
+            try {
+                console.log('[SLI] Trying manual selection fallback');
+                const range = document.createRange();
+                const selection = window.getSelection();
+                const span = document.createElement('span');
+                span.textContent = text;
+                span.style.position = 'fixed';
+                span.style.left = '-999999px';
+                
+                document.body.appendChild(span);
+                range.selectNode(span);
+                selection.removeAllRanges();
+                selection.addRange(range);
+                
+                const success = document.execCommand('copy');
+                span.remove();
+                selection.removeAllRanges();
+                
+                if (success) {
+                    console.log('[SLI] ✅ Successfully copied using manual selection');
+                    return true;
+                }
+            } catch (fallbackError) {
+                console.error('[SLI] ❌ Manual selection fallback also failed:', fallbackError);
+            }
+            
             return false;
         }
     }
